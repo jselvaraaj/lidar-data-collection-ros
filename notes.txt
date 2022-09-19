@@ -1,0 +1,7 @@
+eval "$(/home/bluebear/anaconda3/bin/conda shell.bash hook)"
+
+
+\\wsl$\docker-desktop-data\data\docker\volumes
+
+echo "source /ros_entrypoint.sh" >> ~/.bashrc
+source ~/.bashrc
