@@ -5,3 +5,7 @@ eval "$(/home/bluebear/anaconda3/bin/conda shell.bash hook)"
 
 echo "source /ros_entrypoint.sh" >> ~/.bashrc
 source ~/.bashrc
+
+docker run -dit --volume ros_persist:/RA --name ros_playground ros_custom
+
+docker exec -it ros_playground bash

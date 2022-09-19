@@ -1,0 +1,12 @@
+FROM ros:noetic
+
+SHELL ["/bin/bash", "-c"]
+
+RUN apt-get -y update
+RUN apt-get -y install git
+RUN echo "source /ros_entrypoint.sh" >> ~/.bashrc
+RUN source ~/.bashrc
+RUN mkdir RA
+RUN cd RA && git clone "https://github.com/josndan/octo-succotash.git"
+
+RUN echo "cd /RA/octo-succotash && git pull" >> ~/.bashrc
