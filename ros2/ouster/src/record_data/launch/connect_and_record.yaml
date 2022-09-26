@@ -1,0 +1,30 @@
+launch:
+
+# - arg:
+#     name: "background_r"
+#     default: "0"
+# - arg:
+#     name: "background_g"
+#     default: "255"
+# - arg:
+#     name: "background_b"
+#     default: "0"
+# - arg:
+#     name: "chatter_ns"
+#     default: "my/chatter/ns"
+
+- include:
+    file: "$(find-pkg-share ros2_ouster)/launch/driver_launch.py"
+
+- node:
+    pkg: "record_data"
+    exec: "bag_recorder"
+    name: "OusterRecorder"
+    namespace: "Ouster"
+    # param:
+    # -
+    #   name: "background_r"
+    #   value: "$(var background_r)"
+    # -
+    #   name: "background_g"
+    #   value: "$(var background_g)"

@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'driver'
+package_name = 'record_data'
 
 setup(
     name=package_name,
@@ -15,11 +15,12 @@ setup(
     zip_safe=True,
     maintainer='root',
     maintainer_email='josndan@outlook.com',
-    description='ROS Ouster Driver',
+    description='Record ouster data in a rosbag',
     license='MIT',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'bag_recorder = record_data.record:main'
         ],
     },
 )
