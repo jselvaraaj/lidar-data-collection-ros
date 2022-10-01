@@ -1,0 +1,9 @@
+LIDAR:
+  sensor:
+    hostname: os-122136000486
+    lidar_port: 7502
+    imu_port: 7503
+    buf_size: 640
+  everynseconds: 30
+LOGGER:
+  rotation: 100 MB

@@ -12,3 +12,8 @@ source ~/.bashrc
 docker commands
 docker run -dit --volume ros_persist:/RA --name ros_playground ros_custom
 docker exec -it ros_playground bash
+
+ros
+
+pkg create
+ros2 pkg create --build-type ament_python package_name

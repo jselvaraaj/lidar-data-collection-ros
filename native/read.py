@@ -1,5 +1,5 @@
 try:
-    import config
+    import config as config
 
     metadata_path = config.metadata_path
     pcap_path = config.pcap_path
