@@ -14,7 +14,8 @@ n_seconds = None
 log_rotation = None
 
 def is_global_log(record):
-    return record['message'].find("[Global]") != -1
+    return True
+    # return record['message'].find("[Global]") != -1
 
 def is_local_log(record):
     return record['message'].find("[File Specific]") != -1
@@ -69,7 +70,8 @@ with closing(ouster_client) as source:
     Path("lidar_data").mkdir(exist_ok=True)
     meta = source.metadata
 
-    for i in range(3):
+    i=0
+    while True:
         logger.info(f"[Global] Started Recording: {i+1}th iteration")
 
         current_time = dt.datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -83,10 +85,11 @@ with closing(ouster_client) as source:
 
         local_logger_id = logger.add(fname_base.joinpath("individual.log"), format="{time} {level} {message}", level="DEBUG", filter = is_local_log, rotation=log_rotation)
 
-        logger.info(f"[File Specific] Saving sensor metadata to: {str(fname_base)}")
+        logger.info(f"[File Specific] Started Saving sensor metadata to: {str(fname_base)}")
         source.write_metadata(str(fname_base.joinpath("metadata.json")))
+        logger.info(f"[File Specific] Finished Saving sensor metadata to: {str(fname_base)}")
 
-        logger.info(f"[File Specific] Writing to: {str(fname_base)} (Ctrl-C to stop early)")
+        logger.info(f"[File Specific] Started Writing to: {str(fname_base)} (Ctrl-C to stop early)")
         try:
             source_it = time_limited(n_seconds, source)
             n_packets = pcap.record(source_it, str(fname_base.joinpath("data.pcap")))
@@ -100,9 +103,11 @@ with closing(ouster_client) as source:
         except client.ClientOverflow as e:
             logger.warning(f"[File Specific] data loss is possible - internal buffers filled up {str(e)}")
 
+        logger.info(f"[File Specific] Finished Writing to: {str(fname_base)}")
         logger.remove(local_logger_id)
         
         logger.info(f"[Global] Finished Recording: {i+1}th iteration")
+        i+=1
 
 ouster_client.close() #Precatious
 logger.info("[Global] Closed connection to Ouster Sensor")
